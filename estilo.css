@@ -1,0 +1,311 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at center, #4a0015 0%, #170007 50%, #020202 100%);
+  color: white;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+/* Pantalla inicial */
+.inicio {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  text-align: center;
+  cursor: pointer;
+  background:
+    radial-gradient(circle at center, #65001d 0%, #21000b 55%, #020202 100%);
+  transition:
+    opacity 1s ease,
+    visibility 1s ease;
+}
+
+.inicio.oculto {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.inicio h1 {
+  margin: 0 0 25px;
+  color: #ff6685;
+  font-size: clamp(36px, 8vw, 78px);
+  text-shadow:
+    0 0 10px #ff1744,
+    0 0 30px #ff1744;
+  animation: latido 1.5s infinite;
+}
+
+.inicio p {
+  margin: 0;
+  color: #ffd6df;
+  font-family: Arial, sans-serif;
+  font-size: clamp(16px, 3vw, 23px);
+}
+
+@keyframes latido {
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+/* Página principal */
+.pagina {
+  position: relative;
+  min-height: 100vh;
+  padding: 40px 15px 70px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.pagina.visible {
+  opacity: 1;
+}
+
+.titulo {
+  margin: 0 0 20px;
+  color: #ff6685;
+  font-size: clamp(30px, 6vw, 58px);
+  text-shadow: 0 0 15px #ff1744;
+}
+
+.escena-auto {
+  position: relative;
+  width: min(950px, 96vw);
+  height: min(500px, 55vw);
+  min-height: 260px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.auto {
+  position: absolute;
+  z-index: 5;
+  left: -80%;
+  bottom: 22%;
+  width: min(750px, 78vw);
+  filter: drop-shadow(0 18px 18px rgba(0, 0, 0, 0.9));
+}
+
+.auto img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.auto.arrancando {
+  animation: arrancarAuto 4s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes arrancarAuto {
+  0% {
+    left: -80%;
+  }
+
+  45% {
+    left: 18%;
+  }
+
+  65% {
+    left: 28%;
+  }
+
+  100% {
+    left: 105%;
+  }
+}
+
+.piso {
+  position: absolute;
+  z-index: 1;
+  left: 5%;
+  right: 5%;
+  bottom: 18%;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+/* Humo de corazones */
+.humo {
+  position: absolute;
+  z-index: 4;
+  bottom: 25%;
+  width: 170px;
+  height: 210px;
+  pointer-events: none;
+}
+
+.humo.izquierdo {
+  left: 3%;
+}
+
+.humo.derecho {
+  left: 12%;
+}
+
+.corazon {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  opacity: 0;
+  color: var(--color);
+  font-size: var(--tamano);
+  filter: blur(var(--desenfoque));
+  text-shadow:
+    0 0 8px var(--color),
+    0 0 18px var(--color),
+    0 0 35px var(--color);
+}
+
+.humo.activo .corazon {
+  animation: salirHumo var(--duracion) ease-out forwards;
+  animation-delay: var(--retraso);
+}
+
+@keyframes salirHumo {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0) scale(0.2) rotate(0deg);
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  45% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0;
+    transform:
+      translate(
+        calc(-50% + var(--movimiento)),
+        -220px
+      )
+      scale(1.9)
+      rotate(var(--giro));
+  }
+}
+
+/* Carta */
+.carta {
+  display: none;
+  position: relative;
+  z-index: 20;
+  width: min(850px, 94vw);
+  margin: 15px auto 0;
+  padding: 35px clamp(20px, 5vw, 55px);
+  color: #3d0b16;
+  text-align: left;
+  background:
+    linear-gradient(
+      rgba(255, 251, 240, 0.99),
+      rgba(255, 242, 225, 0.99)
+    );
+  border: 4px solid #c2183b;
+  border-radius: 15px;
+  box-shadow:
+    0 0 25px rgba(255, 23, 68, 0.9),
+    0 15px 40px rgba(0, 0, 0, 0.8);
+}
+
+.carta.visible {
+  display: block;
+  animation: aparecerCarta 1.5s ease forwards;
+}
+
+.carta h2 {
+  margin: 0 0 28px;
+  color: #a9002b;
+  text-align: center;
+  font-size: clamp(28px, 5vw, 44px);
+}
+
+.carta p {
+  margin: 0 0 21px;
+  font-size: clamp(16px, 2vw, 19px);
+  line-height: 1.7;
+  text-align: justify;
+}
+
+.firma {
+  margin-top: 30px;
+  color: #a9002b;
+  text-align: right;
+  font-size: 21px;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+@keyframes aparecerCarta {
+  from {
+    opacity: 0;
+    transform: translateY(60px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 600px) {
+  .pagina {
+    padding-top: 25px;
+  }
+
+  .escena-auto {
+    height: 330px;
+  }
+
+  .auto {
+    bottom: 25%;
+    width: 85vw;
+  }
+
+  .humo {
+    bottom: 26%;
+    transform: scale(0.7);
+  }
+
+  .humo.izquierdo {
+    left: -25px;
+  }
+
+  .humo.derecho {
+    left: 20px;
+  }
+
+  .carta {
+    padding: 28px 18px;
+  }
+
+  .carta p {
+    text-align: left;
+    line-height: 1.6;
+  }
+}
